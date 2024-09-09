@@ -1,13 +1,11 @@
 'use server'
 
-import { NEXT_AUTH } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+
 import  client  from '@/DB';
 
 
 
- export default async  function User(){
+  async  function User(){
 
 
 
@@ -15,9 +13,7 @@ import  client  from '@/DB';
      where:{
          authorId: 8
      },
-     select:{
-        title:true
-     }
+     
   
     })
  
@@ -32,17 +28,17 @@ import  client  from '@/DB';
 
 
 
-//  export default async function UserData(){
+ export default async function UserData(){
    
-//    const data = await user()
+   const {allPost} = await User()
  
    
-//     return(
-       
-// {data}
+    return(
+         {allPost}
+
         
         
-//     )
+    )
        
              
        
@@ -50,4 +46,4 @@ import  client  from '@/DB';
     
     
     
-//  }
+ }

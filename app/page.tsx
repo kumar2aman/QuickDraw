@@ -1,24 +1,17 @@
 "use client"
 
-import { signOut, useSession } from "next-auth/react"
+import Hero from "@/components/homepage"
+
 
 export default function Home() {
 
 
-const session = useSession()
 
   return (
   
-       <div>
-        {JSON.stringify(session)}
-
-<button onClick={()=>{
-  signOut()
-}}>
-  signout
-</button>
-
-       </div>
+     <div>
+      <Hero/>
+     </div>
 
 
 

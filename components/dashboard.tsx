@@ -1,35 +1,24 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { DialogDemo } from "./popup";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import UserData from "./userData";
-import User from "./userData";
+import { useRouter } from "next/navigation";
 
-export default  function Dashboard() {
+import { DialogDemo } from "./dialog";
+import Table from "./table";
 
-
-
-
-
-  
-
+import exceldraw from "@/public/exceldraw.png";
+import Image from "next/image";
+export default function Dashboard() {
   const session = useSession();
+
+  const router = useRouter();
 
   return (
     <>
-    
-    
-    
-     
-
       <div className="flex">
         <div className="flex h-screen w-64 flex-col justify-between border-e bg-white">
-          <div className="px-4 py-6">
-            <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-              Logo
-            </span>
+          <div className="px-4">
+            <Image src={exceldraw} alt="exceldraw" className="h-36" />
 
             <ul>
               <li>
@@ -71,22 +60,36 @@ export default  function Dashboard() {
 
         <div className="w-full">
           <div className="flex justify-between w-full h-16 border-b-2">
-            <div>helloooo</div>
+            <div className="flex">
+              <div>
+                <img
+                  alt=""
+                  src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                  className="size-14 rounded-full object-cover mr-2 ml-2 mt-1"
+                />
+              </div>
+              <div className="p-2 text-2xl font-bold">
+                {session?.data?.user?.name}
+              </div>
+            </div>
             <button
-              onClick={() => {
-                signOut();
+              onClick={async () => {
+                const res = await signOut({ redirect: false });
+                if (res) {
+                  router.push("/");
+                }
               }}
-              className="bg-blue-600 text-white size-12 w-20 rounded-lg mr-7 "
+              className="bg-blue-600 text-white size-12 w-20 rounded-lg mr-7 mt-2 "
             >
               signOut
             </button>
           </div>
 
-          {/* <div className=" mt-7 ml-7 ">
-        <button className="bg-blue-400 size-12 w-44 rounded-lg ">Create new canvas</button>
-     </div> */}
+          <div className=" mt-7 ml-7 ">
+            <DialogDemo />
+          </div>
 
-          <DialogDemo />
+          <Table />
         </div>
       </div>
     </>

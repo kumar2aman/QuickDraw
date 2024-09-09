@@ -1,55 +1,31 @@
 
-import { useState } from "react";
+
+
+import User from "@/components/userData";
 
 
 
-import { NEXT_AUTH } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import  client  from '@/DB';
+
+export default async function Test(){
 
 
-
-  async  function User(){
-
+const {allPost} =  await User()
 
 
-    const allPost= await client.post.findMany({
-     where:{
-         authorId: 8
-     },
-     select:{
-        title:true
-     }
-  
-    })
- 
-    
-    return {
-     allPost
-    
- }
- 
- 
- }
+    // const [Test, setTest] =  useState(User)
 
-
-
-export default   function(){
-
-
-
-const {allPost}:any = User()
-
-   console.log(allPost)
      
 return(
     <div>
-        { 
-            allPost.map((e:any)=>{
-                return e
-            })
-        }
+    {
+        allPost.map((e)=>(
+<div>
+{e.title}
+</div>
+  
+
+        ))
+    }
     </div>
 )
 
