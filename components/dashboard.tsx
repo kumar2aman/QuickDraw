@@ -8,13 +8,20 @@ import Table from "./table";
 
 import exceldraw from "@/public/exceldraw.png";
 import Image from "next/image";
+import { auth } from "@/lib/auth";
+import { useEffect } from "react";
+
+import axios from "axios";
 export default function Dashboard() {
   const session = useSession();
-
   const router = useRouter();
+
+
 
   return (
     <>
+
+    
       <div className="flex">
         <div className="flex h-screen w-64 flex-col justify-between border-e bg-white">
           <div className="px-4">
@@ -39,7 +46,7 @@ export default function Dashboard() {
             >
               <img
                 alt=""
-                src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                src={`${session?.data?.user?.image}`}
                 className="size-10 rounded-full object-cover"
               />
 
@@ -64,7 +71,7 @@ export default function Dashboard() {
               <div>
                 <img
                   alt=""
-                  src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                  src={`${session?.data?.user?.image}`}
                   className="size-14 rounded-full object-cover mr-2 ml-2 mt-1"
                 />
               </div>

@@ -1,20 +1,17 @@
-
-
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/DB";
 
 import { auth } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
- 
-const session:any = await auth()
-  
+  const session: any = await auth();
+
 
   const body = await req.json();
 
   const post = await client.post.create({
     data: {
-      authorId:session?.user?.id,
+      authorId: session?.user?.id,
       title: body.name,
     },
   });
@@ -25,9 +22,7 @@ const session:any = await auth()
 }
 
 export async function GET(req: NextRequest) {
-
-const session:any = await auth()
-
+  const session: any = await auth();
 
   const allPost = await client.post.findMany({
     where: {
@@ -37,18 +32,9 @@ const session:any = await auth()
 
   return NextResponse.json({
     allPost,
-
   });
-
-
-
 }
-
-
 
 // export default function UserList (){
 
-
-
-  
 // }

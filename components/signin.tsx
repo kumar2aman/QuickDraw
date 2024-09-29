@@ -8,37 +8,38 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import exceldraw from "@/public/exceldraw.png";
 import Image from "next/image";
 import axios from "axios";
+import { signInSchema } from "@/app/Schema/schema";
 
 
 
-  const schema = z.object({
-  username:z.string({required_error:"username is required"}).min(4).max(10),
-
- password:z.string().min(4).max(10)
-})
+ 
 
 
 
-type formfield = z.infer<typeof schema>
+type formfield = z.infer<typeof signInSchema>
 
 export default function Signin() {
   const Router = useRouter();
   const session = useSession();
 
 const {register, handleSubmit, formState:{errors}} = useForm<formfield>({
-  resolver: zodResolver(schema)
+  resolver: zodResolver(signInSchema)
 })
 
-const onsubmit = async (data:any) =>{
+const onsubmit = async (data:formfield) =>{
 
 const res =  await signIn("credentials",{
-  username:data.username,
+ email:data.email,
   password:data.password,
    redirect: false,
 })
+
+
 if(res){
   Router.push('/dashboard')
-  console.log(res)
+ 
+}else{
+  console.log("no user found with is email or invalid password")
 }
 
 
@@ -53,7 +54,7 @@ if(res){
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt=""
-            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             className="absolute inset-0 h-full w-full object-cover"
           />
         </aside>
@@ -65,14 +66,14 @@ if(res){
               <Image src={exceldraw} alt="exceldraw" className="h-24 sm:h-60" />
             </h1>
 
-            <p className=" leading-relaxed text-gray-900">
+            <p className=" font-bold text-xl leading-relaxed text-gray-900">
               Draw your Ideas.......
             </p>
            <form onSubmit={handleSubmit(onsubmit)}>
             <div className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label className="block text-sm font-medium text-gray-700">
-                  userName
+                  Email
                 </label>
 
                 <input
@@ -80,11 +81,11 @@ if(res){
                   type="text"
                 
                  
-                  {...register('username')}
+                  {...register('email')}
                   className="mt-1 w-72 h-12 rounded-md border-black border bg-white text-sm text-gray-700 shadow-sm"
                 />
-                {errors.username &&(
-                  <div className="text-red-600">{errors.username.message}</div>
+                {errors.email &&(
+                  <div className="text-red-600">{errors.email.message}</div>
                 )}
               </div>
 
@@ -117,14 +118,53 @@ if(res){
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Already have an account?
-                  <a href="#" className="text-gray-700 underline">
+                 Don't have an account?
+                  <a 
+                  href="/signup" className="text-gray-700 underline">
                     Log in
                   </a>
                   .
                 </p>
               </div>
             </div>
+
+
+            <div className="col-span-6 ">
+              ____________________________________________________________
+
+
+              <p className="text-lg mt-7"> Signup with </p>
+                <div className="col-span-6 mt-7 flex space-x-10">
+                <button
+                type="button"
+                onClick={()=>{
+                  signIn("google",{
+                    callbackUrl:"/dashboard"
+                  })
+                }}
+                
+                className=" bg-gray-800 size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-white hover:border-2 border-black">
+                
+                 <img  className="size-10 " src="https://static-00.iconduck.com/assets.00/google-icon-512x512-tqc9el3r.png" alt="google" />
+                </button>
+                 <button
+              type="button"
+                 onClick={ async()=>{
+                  
+                    signIn("github",{
+                    callbackUrl:"/dashboard"
+                   
+                  })
+               
+                 }}
+                 
+                 className=" bg-white size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-gray-200 border-2 border-black">
+              <img className="size-10" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="github" />
+                 </button>
+
+                </div>
+              
+              </div>
             </form>
           </div>
         </main>

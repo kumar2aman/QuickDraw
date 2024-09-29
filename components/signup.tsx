@@ -1,60 +1,54 @@
+
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { boolean, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+
 import { useRouter } from "next/navigation";
+import {newUser } from "../app/actions/userData";
+import { signUpSchema } from "@/app/Schema/schema";
+import { InfinitySpin } from "react-loader-spinner";
+import { useState } from "react";
+import { Flag } from "lucide-react";
+import { signIn, useSession } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/route";
 
-const schema = z.object({
-  username: string().min(4).max(10),
-  email: string().email(),
-  password: string().min(4).max(10),
-});
+type schemaType = z.infer<typeof signUpSchema>;
 
-type schemaType = z.infer<typeof schema>;
-
-export default function Signup() {
+export default    function Signup() {
   const router = useRouter();
+const session =  useSession()
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<schemaType>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(signUpSchema),
   });
 
-  const onsubmit = async (data:schemaType) => {
-
-
-
-console.log(data)
-
-  
-
-  const response =  await fetch(`/api/signup`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-const finalData = await response.json();
-
-console.log(finalData)
-
-
-
-
-    // const res = await axios.post("/api/signup", data);
-
-    // console.log(res)
-
-    // if (res) {
-    //   router.push("/signin");
-    // } else {
-    //   console.log("signup new user failed");
-    // }
+  const onsubmit = async (data: schemaType) => {
+    //  setLoading(true);
+    try {
+    
+      newUser(data);
+      if (data) {
+        router.push("/signin");
+      } else {
+        console.log("new user signup failed");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(true);
+    }
   };
 
+ 
+
   return (
-    <section className="bg-white">
+    <>
+    <section>
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img
@@ -88,7 +82,6 @@ console.log(finalData)
               nam dolorum aliquam, quibusdam aperiam voluptatum.
             </p>
           </div>
-          
         </section>
 
         <main className="flex  justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
@@ -139,11 +132,11 @@ console.log(finalData)
                   {...register("username")}
                   className="mt-1 w-full rounded-md border border-black h-12 bg-white text-lg text-gray-700 shadow-sm"
                 />
-              </div>
 
-              {errors.username &&(
-                <div className="text-red-600">{errors.username?.message}</div>
-              )}
+                {errors.username && (
+                  <div className="text-red-600">{errors.username?.message}</div>
+                )}
+              </div>
 
               <div className="col-span-6">
                 <label
@@ -159,11 +152,11 @@ console.log(finalData)
                   {...register("email")}
                   className="mt-1 w-auto rounded-md border border-black h-12 bg-white text-lg text-gray-700 shadow-sm"
                 />
-              </div>
 
-              {errors.email &&(
-                <div className="text-red-600">{errors.email.message}</div>
-              )}
+                {errors.email && (
+                  <div className="text-red-600">{errors.email.message}</div>
+                )}
+              </div>
 
               <div className="col-span-6 sm:col-span-3">
                 <label
@@ -179,13 +172,14 @@ console.log(finalData)
                   {...register("password")}
                   className="mt-1 w-full rounded-md border border-black h-12 bg-white text-lg text-gray-700 shadow-sm"
                 />
+
+                {errors.password && (
+                  <div className="text-red-600">{errors.password.message}</div>
+                )}
               </div>
 
-              {errors.password&&(
-                <div className="text-red-600">{errors.password.message}</div>
-              )}
+               
 
-            
 
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">
@@ -197,8 +191,8 @@ console.log(finalData)
                   and
                   <a href="#" className="text-gray-700 underline">
                     privacy policy
-                  </a>+
-                  .
+                  </a>
+                  + .
                 </p>
               </div>
 
@@ -207,33 +201,64 @@ console.log(finalData)
                   type="submit"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                 >
-                  Create an account
+                  {
+                    loading?   "loading" : "Create an account"
+                  }
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                   Already have an account?
-                  <a href="#" className="text-gray-700 underline">
+                  <a href="/signin" className="text-gray-700 underline">
                     Log in
                   </a>
                   .
                 </p>
+              </div>
+
+
+              <div className="col-span-6 ">
+              ____________________________________________________________
+
+
+              <p className="text-lg mt-7"> Or Signup with </p>
+                <div className="col-span-6 mt-7 flex space-x-10">
+                <button
+                type="button"
+                onClick={()=>{
+                  signIn("google",{
+                    callbackUrl:DEFAULT_LOGIN_REDIRECT
+                  })
+                }}
+                
+                className=" bg-gray-800 size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-white hover:border-2 border-black">
+                
+                 <img  className="size-10 " src="https://static-00.iconduck.com/assets.00/google-icon-512x512-tqc9el3r.png" alt="google" />
+                </button>
+                 <button
+              type="button"
+                 onClick={ async()=>{
+                  
+                    signIn("github",{
+                   
+                    callbackUrl:DEFAULT_LOGIN_REDIRECT
+                  })
+               
+                 }}
+                 
+                 className=" bg-white size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-gray-200 border-2 border-black">
+              <img className="size-10" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="github" />
+                 </button>
+
+                </div>
+              
               </div>
             </form>
           </div>
         </main>
       </div>
     </section>
+    
+    </>
   );
 }
 
-
-
-//we have to declear a default 
-
-
-//version of cons.. is not define 
-
-// in this case will not will us but is we are not going to use the defualt constors we will not get any error as for example if
-// we try to create the object as the above 
-// it will work because the main resposblity of consatar to allocate the memory
-//each and every object will get 

@@ -9,9 +9,6 @@ import {
 
 
 export default auth((req): any => {
-  // const LOGIN = !!req.auth
-  //     console.log("PATH:", req.nextUrl.pathname)
-  //     console.log("login:", LOGIN)
 
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;

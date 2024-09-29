@@ -1,33 +1,33 @@
 
 
 
-import User from "@/components/userData";
+// import User from "@/app/actions/userData";
 
 
 
 
-export default async function Test(){
+// export default async function Test(){
 
 
-const {allPost} =  await User()
+// const {allPost} =  await User()
 
 
-    // const [Test, setTest] =  useState(User)
+//     // const [Test, setTest] =  useState(User)
 
      
-return(
-    <div>
-    {
-        allPost.map((e)=>(
-<div>
-{e.title}
-</div>
+// return(
+//     <div>
+//     {
+//         allPost.map((e)=>(
+// <div>
+// {e.title}
+// </div>
   
 
-        ))
-    }
-    </div>
-)
+//         ))
+//     }
+//     </div>
+// )
 
 
 

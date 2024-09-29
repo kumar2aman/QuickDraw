@@ -60,7 +60,7 @@ return(
                
               )
               if(res){
-                dispatch(increment())
+                dispatch(decrement())
               }else{
                 return null
               }
