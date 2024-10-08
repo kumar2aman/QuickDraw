@@ -17,7 +17,7 @@ export default function Table() {
 
   useEffect(() => {
     const datafetch = async () => {
-      const response = await axios.get("/api/userdata");
+      const response = await axios.get("/api/user/post/all");
 
       setDate(response.data.allPost);
     };

@@ -53,7 +53,7 @@ return(
           </AlertDialog.Cancel>
           <AlertDialog.Action asChild>
             <button  onClick={async()=>{
-                const res = await axios.post("/api/deletecanvas",{
+                const res = await axios.post("/api/canvas/destory",{
                   e
                 },
               

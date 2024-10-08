@@ -63,7 +63,7 @@ export function DialogDemo() {
               type="submit"
               className="bg-red-500"
               onClick={async () => {
-                await axios.post("/api/userdata", {
+                await axios.post("/api/canvas/create", {
                   name,
                 });
        dispatch(increment())

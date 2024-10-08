@@ -1,12 +1,11 @@
 "use server";
 
 import prisma from "@/DB";
-import { z, string } from "zod";
+import { z } from "zod";
 
 import bcrypt from "bcryptjs";
 import { signUpSchema } from "@/app/Schema/schema";
-import { auth } from "@/lib/auth";
-import { useSession } from "next-auth/react";
+
 
 type schemaType = z.infer<typeof signUpSchema>;
 
