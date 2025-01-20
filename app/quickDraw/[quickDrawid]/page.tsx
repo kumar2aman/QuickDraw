@@ -14,8 +14,8 @@ export default function ({ params }: any) {
 
   useEffect(() => {
     const datafetch = async () => {
-      const res = await axios.get(`/api/updateWhiteboard/?id=${id}`);
-      console.log(res.data.allresponse);
+      const res = await axios.get(`/api/canvas/update/?id=${id}`);
+     
       if (res.data.allresponse) {
         const updatedData = await res.data.allresponse;
         setcanvas(updatedData);
@@ -58,6 +58,7 @@ export default function ({ params }: any) {
               }
             />
           )}
+       
         </div>
       </div>
     </>

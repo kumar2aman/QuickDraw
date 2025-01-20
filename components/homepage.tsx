@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import HomeNavbar from "./homeNavbar";
 
-export default function Hero() {
+export default function HomePage() {
   const router = useRouter();
   return (
     <>

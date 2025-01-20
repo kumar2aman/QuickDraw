@@ -21,20 +21,4 @@ export async function POST(req: NextRequest) {
   });
 }
 
-export async function GET(req: NextRequest) {
-  const session: any = await auth();
 
-  const allPost = await client.post.findMany({
-    where: {
-      authorId: session?.user?.id,
-    },
-  });
-
-  return NextResponse.json({
-    allPost,
-  });
-}
-
-// export default function UserList (){
-
-// }
