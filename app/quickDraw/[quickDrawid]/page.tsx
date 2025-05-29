@@ -27,7 +27,7 @@ export default function QuickDrawId({ params }: any) {
     datafetch();
   }, []);
 
-  console.log(canvas)
+
 
   return (
     <>
