@@ -122,7 +122,7 @@ if(res){
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                 Don't have an account?
+                 Don&apos;t have an account?
                   <a 
                   href="/signup" className="text-gray-700 underline">
                     Log in

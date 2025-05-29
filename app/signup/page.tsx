@@ -4,7 +4,7 @@
 import Signup from "@/components/signup";
 
 
-export default function(){
+export default  function Components(){
     return(
         <Signup/>
     )

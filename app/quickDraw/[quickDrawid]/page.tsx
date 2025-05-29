@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
-export default function ({ params }: any) {
+export default function QuickDrawId ({ params }: any) {
   const [whiteboardData, setwhiteboardData] = useState<any>();
   const [canvas, setcanvas] = useState<any>();
   const router = useRouter();

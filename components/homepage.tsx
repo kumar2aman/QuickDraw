@@ -11,7 +11,7 @@ export default function HomePage() {
         <div className="absolute top-28 w-full justify-center flex ">
           <div className="py-2 px-2 rounded-3xl border-t-[1.5px] border-l-2 border-white/20  bg-white/20 cursor-pointer shadow-lg">
             <p className="mx-auto text-white text-sm">
-              See what's new |{" "}
+              See what&apos;s new |{" "}
               <span
                 onClick={() => {
                   router.push("https://blog.excalidraw.com/");

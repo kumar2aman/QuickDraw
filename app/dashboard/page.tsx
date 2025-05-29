@@ -1,7 +1,7 @@
 import Dashboard from "../../components/dashboard";
 
 
-export default function(){
+export default function DashboardMain(){
     return(
         <Dashboard/>
     )
