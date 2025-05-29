@@ -23,7 +23,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
- 
   const whiteboardData = await client.post.findUnique({
     where: {
       id: id as string,
@@ -35,7 +34,7 @@ export async function GET(req: NextRequest) {
 
   if (whiteboardData) {
     const allresponse = whiteboardData?.canvas;
-    
+
     return NextResponse.json({
       allresponse,
     });

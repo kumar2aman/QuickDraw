@@ -66,7 +66,7 @@ export default function Table() {
                   <td>
                     <button
                       onClick={() => {
-                        router.push(`/exceldraw/${e.id}`);
+                        router.push(`/quickDraw/${e.id}`);
                       }}
                       className="whitespace-nowrap px-7 py-2 mt-3 mb-3 font-bold text-black bg-green-400  hover:bg-green-600 rounded-md "
                     >
