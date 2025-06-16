@@ -4,100 +4,45 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { DialogDemo } from "./dialog";
-import Table from "./table";
+import Canvascards from "./canvasCards";
+import { DropdownMenuDemo } from "./dropDownMenu";
 
-import exceldraw from "@/public/exceldraw.png";
-import Image from "next/image";
-import { auth } from "@/lib/auth";
-import { useEffect } from "react";
-
-import axios from "axios";
 export default function Dashboard() {
   const session = useSession();
   const router = useRouter();
 
-
-
   return (
     <>
-
-    
-      <div className="flex">
-        <div className="flex h-screen w-64 flex-col justify-between border-e bg-white">
-          <div className="px-4">
-            <Image src={exceldraw} alt="exceldraw" className="h-36" />
-
-            <ul>
-              <li>
-                <a
-                  href="#"
-                  className="block rounded-lg mt-12 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
-                >
-                  General
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-            <a
-              href="#"
-              className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
-            >
-              <img
-                alt=""
-                src={`${session?.data?.user?.image}`}
-                className="size-10 rounded-full object-cover"
-              />
-
-              <div>
-                <p className="text-xs">
-                  <strong className="block font-medium">
-                    {session?.data?.user?.name}
-                  </strong>
-
-                  <span> {session?.data?.user?.email} </span>
-                </p>
-              </div>
-            </a>
+      <div className="w-full min-h-screen bg-gradient-to-br from-pink-100 to-slate-300">
+        <div className="  w-full h-16 border-b-2 border-black">
+          <div className="flex items-center justify-between  py-2 px-10 ">
+            <div className="flex">
+            <div className="w-6 h-6 bg-blue-600 rounded-full"></div>
+            <span className="text-xl font-bold text-gray-800">Quickdraw</span>
+             
+            </div>
+            <DropdownMenuDemo/>
+          
           </div>
         </div>
 
-        <div></div>
+        <main>
 
-        <div className="w-full">
-          <div className="flex justify-between w-full h-16 border-b-2">
-            <div className="flex">
-              <div>
-                <img
-                  alt=""
-                  src={`${session?.data?.user?.image}`}
-                  className="size-14 rounded-full object-cover mr-2 ml-2 mt-1"
-                />
-              </div>
-              <div className="p-2 text-2xl font-bold">
-                {session?.data?.user?.name}
-              </div>
-            </div>
-            <button
-              onClick={async () => {
-                const res = await signOut({ redirect: false });
-                if (res) {
-                  router.push("/");
-                }
-              }}
-              className="bg-blue-600 text-white size-12 w-20 rounded-lg mr-7 mt-2 "
-            >
-              signOut
-            </button>
-          </div>
-
+         
+      
+          
           <div className=" mt-7 ml-7 ">
             <DialogDemo />
           </div>
 
-          <Table />
-        </div>
+          <div className="text-2xl font-bold ml-6 mt-6">
+            <p>Recent Projects</p>
+          </div>
+
+          <div className="mt-12">
+            <Canvascards />
+          </div>
+        </main>
       </div>
     </>
   );

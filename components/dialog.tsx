@@ -14,33 +14,41 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { increment,decrement } from "@/lib/features/states/statesSlice";
-import { RootState } from "@/lib/store";
+import { increment, decrement } from "@/lib/features/states/statesSlice";
+import { useSession } from "next-auth/react";
 
 export function DialogDemo() {
   const [name, setName] = useState("");
-  
 
+  const session = useSession();
 
+  const dispatch = useDispatch();
 
-  const dispatch =useDispatch();
+  const str = session?.data?.user?.name;
 
- 
+  const userName = str?.split(" ")[0];
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-pink-400 size-14 w-32" variant="outline">
-          New canvas
-         
-        </Button>
-     
-      </DialogTrigger>
+      <div className="flex justify-between">
+        <div className="text-4xl font-bold">
+          {" "}
+          <p>Welcome back, {userName}</p>{" "}
+        </div>
+        <DialogTrigger asChild>
+          <Button
+            className="bg-pink-400 text-xl h-16 w-auto mr-16"
+            variant="outline"
+          >
+            <span className="text-4xl pr-2">+ </span> Create New Canvas
+          </Button>
+        </DialogTrigger>
+      </div>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create Canvas</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Make new canvas here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -61,16 +69,15 @@ export function DialogDemo() {
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-red-500"
+              className="bg-pink-700"
               onClick={async () => {
                 await axios.post("/api/canvas/create", {
                   name,
                 });
-       dispatch(increment())
-
+                dispatch(increment());
               }}
             >
-              Save changes
+              Create
             </Button>
           </DialogFooter>
         </DialogPrimitive.Close>

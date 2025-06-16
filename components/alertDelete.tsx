@@ -31,8 +31,8 @@ return(
 
     
     <AlertDialog.Trigger asChild>
-      <button className=" inline-flex h-[35px] items-center justify-center   px-[15px] font-medium leading-none text-black border-black focus:shadow-black rounded-2xl">
-      <RiDeleteBinLine className="size-6"/>
+      <button className=" inline-flex h-[50px] w-20 items-center justify-center bg-gray-400 rounded-full hover:bg-red-300  ">
+      <RiDeleteBinLine className="size-8    "/>
       </button>
     </AlertDialog.Trigger>
     <AlertDialog.Portal>
@@ -42,8 +42,7 @@ return(
           Are you absolutely sure?
         </AlertDialog.Title>
         <AlertDialog.Description className="text-mauve11 mt-4 mb-5 text-[15px] leading-normal">
-          This action cannot be undone. This will permanently delete your account and remove your
-          data from our servers.
+          This action cannot be undone. This will permanently delete your canvas
         </AlertDialog.Description>
         <div className="flex justify-end gap-[25px]">
           <AlertDialog.Cancel asChild>
