@@ -48,7 +48,7 @@ export default function HomePage() {
               Unleash Your Creativity with <br className="hidden md:block"/> <span className="text-orange-500">Quickdraw</span> 
             </h1>
             <p className="text-base md:text-xl text-white max-w-2xl mb-8 mt-10">
-              Quickdraw is a collaborative drawing platform that lets you sketch, diagram, and brainstorm ideas in real-time with others. It's intuitive, fun, and perfect for teams and individuals alike.
+              Quickdraw is a collaborative drawing platform that lets you sketch, diagram, and brainstorm ideas in real-time with others. It`&apos;`s intuitive, fun, and perfect for teams and individuals alike.
             </p>
             <button className="bg-[#ff6a30] text-black text-lg px-8 py-3 rounded-md hover:bg-[#eb7a2f] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">
               Start Drawing Now
