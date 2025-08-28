@@ -1,16 +1,9 @@
-import { ArrowRight, Palette, Shield, Users, Zap } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation"
+import Link from 'next/link'
+import { ArrowRight, Palette, Users, Zap, Shield } from 'lucide-react'
 
 export default function HomePage() {
-  const router = useRouter();
   return (
-    
-    <>
-    
-   <div className="font-mono text-2xl text-red-500">This page is rebuilding by devloper.. soon it will get updated </div>
-
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50">
       {/* Hero Section */}
       <section className="relative pt-20 pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-accent-500/10"></div>
@@ -125,6 +118,5 @@ export default function HomePage() {
         </div>
       </section>
     </div>
-    </>
-  );
+  )
 }
