@@ -1,24 +1,21 @@
-"use client";
+'use client'
 
-import { signIn, useSession } from "next-auth/react";
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { signInSchema } from '@/app/Schema/schema'
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import exceldraw from "@/public/exceldraw.png";
-import Image from "next/image";
-import axios from "axios";
-import { signInSchema } from "@/app/Schema/schema";
+type formfield = z.infer<typeof signInSchema>
 
-type formfield = z.infer<typeof signInSchema>;
-
-export default function Signin() {
- const [loding, setLoding] = useState<boolean>(false)
-
-  const Router = useRouter();
-  const session = useSession();
+export default function SignIn() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const session = useSession()
 
   const {
     register,
@@ -26,145 +23,134 @@ export default function Signin() {
     formState: { errors },
   } = useForm<formfield>({
     resolver: zodResolver(signInSchema),
-  });
+  })
 
   const onsubmit = async (data: formfield) => {
-    const res = await signIn("credentials", {
+    setLoading(true)
+    const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
       redirect: false,
-    });
+    })
 
     try {
-      if (res) {
-        Router.push("/dashboard");
+      if (res?.ok) {
+        router.push('/dashboard')
       } else {
-        console.log("no user found with is email or invalid password");
+        console.log('No user found with this email or invalid password')
       }
-      
     } catch (error) {
-      throw error;
-    }finally{
-      setLoding(true)
+      console.error(error)
+    } finally {
+      setLoading(false)
     }
-
-   
-  };
+  }
 
   return (
-    <section className="bg-white">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </aside>
-
-        <main className="flex  ml-7 px-8 py-8 sm:px-12 lg:col-span-7 lg:px-2 lg:py-2 xl:col-span-6">
-          <div className="max-w-xl lg:max-w-3xl">
-            <h1 className=" mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-7xl ">
-              Welcome back
-             
-            </h1>
-
-            <p className=" font-bold text-xl mt-20  mb-20 leading-relaxed text-gray-900">
-              Draw your Ideas.......
-            </p>
-            <form onSubmit={handleSubmit(onsubmit)}>
-              <div className="mt-8 grid grid-cols-6 gap-6">
-                <div className="col-span-6 sm:col-span-3">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email
-                  </label>
-
-                  <input
-                    type="text"
-                    {...register("email")}
-                    className="mt-1 w-72 h-12 rounded-md border-black border bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                  {errors.email && (
-                    <div className="text-red-600">{errors.email.message}</div>
-                  )}
-                </div>
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label className="block text-sm font-medium text-gray-700">
-                    {" "}
-                    Password{" "}
-                  </label>
-
-                  <input
-                    type="password"
-                    {...register("password")}
-                    className="mt-1 w-72 h-12 border rounded-md border-black bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                  {errors.password && (
-                    <div className="text-red-600">
-                      {errors.password.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button
-                    type="submit"
-                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                  >
-                     {loding? "loding": "signIn"} 
-                  </button>
-
-                  <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                    Don&apos;t have an account?
-                    <a href="/signup" className="text-gray-700 underline">
-                    sign up
-                    </a>
-                    .
-                  </p>
-                </div>
-              </div>
-
-              <div className="col-span-6 ">
-                ____________________________________________________________
-                <p className="text-lg mt-7"> Signup with </p>
-                <div className="col-span-6 mt-7 flex space-x-10">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      signIn("google", {
-                        callbackUrl: "/dashboard",
-                      });
-                    }}
-                    className=" bg-gray-800 size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-white hover:border-2 border-black"
-                  >
-                    <img
-                      className="size-10 "
-                      src="https://static-00.iconduck.com/assets.00/google-icon-512x512-tqc9el3r.png"
-                      alt="google"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      signIn("github", {
-                        callbackUrl: "/dashboard",
-                      });
-                    }}
-                    className=" bg-white size-14 w-52 rounded-lg  flex justify-center items-center hover:bg-gray-200 border-2 border-black"
-                  >
-                    <img
-                      className="size-10"
-                      src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-                      alt="github"
-                    />
-                  </button>
-                </div>
-              </div>
-            </form>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+            <p className="text-gray-600">Sign in to your QuickDraw account</p>
           </div>
-        </main>
+
+          <form onSubmit={handleSubmit(onsubmit)} className="space-y-6">
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                <input
+                  type="email"
+                  {...register('email')}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your email"
+                />
+              </div>
+              {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password')}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="my-6 border-t border-gray-200" />
+
+          {/* Social Auth */}
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">Or sign in with</p>
+            <div className="flex justify-center space-x-6">
+              {/* Google */}
+              <button
+                onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                className="bg-white border border-gray-300 hover:border-gray-500 p-2 rounded-lg"
+              >
+                <img
+                  src="https://www.vectorlogo.zone/logos/google/google-tile.svg"
+                  alt="Google"
+                  className="w-6 h-6"
+                />
+              </button>
+
+              {/* GitHub */}
+              <button
+                onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
+                className="bg-white border border-gray-300 hover:border-gray-500 p-2 rounded-lg"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+                  alt="GitHub"
+                  className="w-6 h-6"
+                />
+              </button>
+            </div>
+          </div>
+
+          {/* Link to signup */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-600">
+              Don't have an account?{' '}
+              <a href="/signup" className="text-primary-600 font-medium hover:text-primary-500">
+                Sign up here
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-    </section>
-  );
+    </div>
+  )
 }
