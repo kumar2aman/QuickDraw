@@ -14,7 +14,7 @@ export default function Dashboard() {
   return (
     <>
     <div>devloper is revamping the dashboard soon it will get updated but still you can use it...</div>
-      
+      <div> right now removeing all components and adding new ones </div>
           
         
 
