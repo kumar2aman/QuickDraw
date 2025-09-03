@@ -27,9 +27,7 @@ export default function Dashboard() {
             <DialogDemo />
           </div>
 
-          <div className="text-2xl font-bold ml-6 mt-6">
-            <p>Recent Projects</p>
-          </div>
+         
 
           <div className="mt-12">
             <Canvascards />
