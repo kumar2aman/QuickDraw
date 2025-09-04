@@ -22,16 +22,11 @@ export default function Dashboard() {
 
          
       
-          
-          <div className=" mt-7 ml-7 ">
-            <DialogDemo />
-          </div>
+         
 
          
 
-          <div className="mt-12">
-            <Canvascards />
-          </div>
+         
         </main>
       
     </>
