@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { increment, decrement } from "@/lib/features/states/statesSlice";
 import { useSession } from "next-auth/react";
+import { Plus } from "lucide-react";
 
 export function DialogDemo() {
   const [name, setName] = useState("");
@@ -31,20 +32,20 @@ export function DialogDemo() {
   return (
     <Dialog>
       <div className="flex justify-between">
-        <div className="text-4xl font-bold">
+        {/* <div className="text-4xl font-bold">
           {" "}
           <p>Welcome back, {userName}</p>{" "}
-        </div>
+        </div> */}
         <DialogTrigger asChild>
           <Button
-            className="bg-pink-400 text-xl h-16 w-auto mr-16"
+            className="bg-pink-400 text-l h-16 w-auto mr-16 hover:bg-purple-400"
             variant="outline"
           >
-            <span className="text-4xl pr-2">+ </span> Create New Canvas
+            <span className="text-4xl pr-2"><Plus/></span> Create New Canvas
           </Button>
         </DialogTrigger>
       </div>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-gray-200 shadow-lg shadow-black">
         <DialogHeader>
           <DialogTitle>Create Canvas</DialogTitle>
           <DialogDescription>
@@ -61,7 +62,7 @@ export function DialogDemo() {
                 setName(e.target.value);
               }}
               id="name"
-              className="col-span-3"
+              className="col-span-3 text-[18px]"
             />
           </div>
         </div>
@@ -69,7 +70,7 @@ export function DialogDemo() {
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-pink-700"
+              className="bg-pink-400 hover:bg-purple-400"
               onClick={async () => {
                 await axios.post("/api/canvas/create", {
                   name,
