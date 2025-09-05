@@ -38,7 +38,7 @@ export function DialogDemo() {
         </div> */}
         <DialogTrigger asChild>
           <Button
-            className="bg-pink-400 text-l h-16 w-auto mr-16 hover:bg-purple-400"
+            className="bg-pink-400 text-l h-16 w-auto mr-20 hover:bg-purple-400"
             variant="outline"
           >
             <span className="text-4xl pr-2"><Plus/></span> Create New Canvas

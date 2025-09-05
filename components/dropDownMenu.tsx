@@ -29,11 +29,11 @@ export function DropdownMenuDemo() {
             <img
               alt=""
               src={`${session?.data?.user?.image}`}
-              className="size-10 rounded-full object-cover mr-2 ml-2 mt-1"
+              className="size-12 rounded-full object-cover mr-2 ml-2 mt-1"
             />
           </div>
-          <div className="p-2 text-xl font-bold flex items-center">
-            {session?.data?.user?.name} <span className="ml-2"><IoIosArrowDown /></span>
+          <div className="text-xl font-bold flex items-center">
+             <span className=""><IoIosArrowDown /></span>
           </div>
         </div>
       </DropdownMenuTrigger>
