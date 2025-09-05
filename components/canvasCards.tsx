@@ -7,6 +7,7 @@ import AlertDialogDemo from "./alertDelete";
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { Calendar, FileText, Trash2 } from "lucide-react";
 
 export default function CanvasCards() {
   const router = useRouter();
@@ -27,39 +28,41 @@ export default function CanvasCards() {
 
   return (
     <>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
-            {data.map((drawing:any) => (
-              <div
-                key={drawing.id}
-                className="bg-slate-100 ml-4 rounded-lg shadow-md overflow-hidden flex flex-col items-center p-4"
-              >
-                <div onClick={()=>{
-                  router.push(`/quickDraw/${drawing.id}`)
-                }} className="relative w-full h-48 mb-4 cursor-pointer rounded-lg overflow-hidden border border-gray-200 flex items-center justify-center  transform transition duration-300 ease-in-out hover:scale-105">
-                  <img
-                    src="https://cdn.dribbble.com/userupload/43284235/file/original-0551d60b7dda49247d0c80436a03efbd.jpg?resize=1600x1200&vertical=center"
-                  
-                    className="object-fit  w-full h-full"
-                  />
-                  {/* Overlay for aesthetic, resembling a minimal photo frame */}
-                  <div className="absolute inset-0 border-2 border-gray-300 rounded-lg pointer-events-none "></div>
-                </div>
-                <div className="flex col justify-evenly">
-                  <div >
-                  <h3 className="text-lg font-semibold text-gray-800 text-center">{drawing.title}</h3>
-                  <p className="text-sm text-gray-500 text-center">Created At: {drawing.createdAt}</p>
-                  </div>
-                  <div className = "ml-12">
-                  <AlertDialogDemo e={drawing} />
-                  </div>
-              
-                </div>
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {data.map((canvas:any) => (
+              <div key={canvas.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900 truncate flex-1 mr-2">
+                      {canvas.title}
+                    </h3>
+                   <div>
 
-                
+                   </div>
+                       <AlertDialogDemo e={canvas}/>
+                      {/* className="text-gray-400 hover:text-red-500 p-1 rounded-md transition-colors"
+                      title="Delete canvas" */}
+                    
+                      
+                    
+                  </div>
+                  
+                  <div className="bg-gray-100 rounded-lg h-32 mb-4 flex items-center justify-center">
+                    <FileText className="w-8 h-8 text-gray-400" />
+                  </div>
+                  
+                  <div className="flex items-center text-sm text-gray-500 mb-4">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    Updated {canvas.updated_at}
+                  </div>
+                  
+                  <button className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors">
+                    Open Canvas
+                  </button>
+                </div>
               </div>
             ))}
           </div>
-          
     </>
   );
 }

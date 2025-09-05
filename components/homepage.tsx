@@ -1,11 +1,20 @@
 import Link from 'next/link'
 import { ArrowRight, Palette, Users, Zap, Shield } from 'lucide-react'
+import Header from './header'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50">
+    <>
+     <Header/>
+
+
+
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50">
+       
       {/* Hero Section */}
       <section className="relative pt-20 pb-32 overflow-hidden">
+
+
         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-accent-500/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -118,5 +127,7 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+    </>
+   
   )
 }

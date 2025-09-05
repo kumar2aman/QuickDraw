@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 import { decrement, increment } from "@/lib/features/states/statesSlice";
+import { Trash2 } from 'lucide-react';
 
 
 
@@ -31,8 +32,8 @@ return(
 
     
     <AlertDialog.Trigger asChild>
-      <button className=" inline-flex h-[50px] w-20 items-center justify-center bg-gray-400 rounded-full hover:bg-red-300  ">
-      <RiDeleteBinLine className="size-8    "/>
+      <button className="text-gray-400 hover:text-red-500 p-1 rounded-md transition-colors">
+      <Trash2 className="size-6   "/>
       </button>
     </AlertDialog.Trigger>
     <AlertDialog.Portal>
