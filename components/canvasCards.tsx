@@ -56,7 +56,7 @@ export default function CanvasCards() {
                     Updated {canvas.updated_at}
                   </div>
                   
-                  <button className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors">
+                  <button onClick={() => router.push(`/canvas/${canvas.id}`)} className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors">
                     Open Canvas
                   </button>
                 </div>
